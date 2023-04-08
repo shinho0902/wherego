@@ -1,0 +1,88 @@
+{% load static %}
+{% load operate %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="{% static 'img/어디고.png' %}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <title>어디GO 게시판</title>
+    
+    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style4.css' %}">
+</head>
+
+<style>
+    .board_write .title dt, .board_write .title dd, .board_write .info dt, .board_write .info dd {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 1.0rem;
+        margin:0px;
+    }
+    .bt_wrap a {
+        font-size: 1.0rem;
+    }
+</style>
+
+<body style="position:absolute; width:100vw;" data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+  {% include 'header.html' %}
+  <div class="container" style="margin-top:20vh;">
+    <div class="board_wrap">
+        <div class="board_title">
+            <h2><strong><span style="color: #4595e6;">추억</span> 다이어리</strong></h2>
+            <p>추천 받은 장소를 기록해드립니다.</p>
+        </div>
+        <div class="board_write_wrap">
+            <div class="board_write">
+                <form action="" method ="POST" enctype="multipart/form-data" id="frm">
+                    {% csrf_token %}
+                <div class="title">
+                    <dl>
+                        <dt>제목</dt>
+                        <dd><input type="text" id="title" placeholder="제목 입력" value="{{ post.title }}" name="title"></dd>
+                    </dl>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>글쓴이</dt>
+                        <dd><input type="text" placeholder="글쓴이 입력" value="{{ post.writer }}" readonly></dd>
+                    </dl>
+                    <dl>
+                        <dt>이미지</dt>
+                        <dd><input type="file" name="img" accept="image/jpeg, image/png, image/bmp, image/jpg"></dd>
+                    </dl>
+                </div>
+                <div class="cont">
+                    <textarea placeholder="내용 입력" name="body" id="body">{{ post.body }}</textarea>
+                </div>
+            </div>
+            <div class="bt_wrap">
+                <a href="#" class="on" onclick="return chk_form()">수정</a>
+                <a href="javascript:window.history.go(-1);">취소</a>
+            </div>
+            </form>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+<script>
+function chk_form() {
+    if(document.getElementById("title").value==''){
+        alert("제목을 입력해주십시오.");
+        return false;
+    }
+    if(document.getElementById("body").value==''){
+        alert("내용을 입력해주십시오.");
+        return false;
+    }
+    document.getElementById('frm').submit();
+}
+</script>
+</html>

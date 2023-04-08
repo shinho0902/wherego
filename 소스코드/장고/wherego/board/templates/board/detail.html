@@ -1,0 +1,112 @@
+{% load static %}
+{% load operate %}
+<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="{% static 'img/어디고.png' %}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+      
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+    <title>어디GO 게시판</title>
+
+  <link rel="stylesheet" href="{% static 'css/css.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style4.css' %}">
+</head>
+<style>
+    .board_title {
+        display:flex;
+        flex-direction:column;
+    }
+
+    .title_span {
+        font-size:1.0rem;
+    }
+
+    .info {
+        display:flex;
+        align-items:center;
+    }
+
+    .info_span {
+        font-size:20px;
+    }
+
+    .info_dd,
+    .info_dt {
+        font-size:15px;
+        margin-right:10px;
+    }
+
+    .post_body {
+        font-size:18px;
+        font-weight:400;
+    }
+    .bt_wrap a {
+        font-size: 1.0rem;
+    }
+    
+    
+</style>
+
+
+<body style="position:absolute; width:100vw;" data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+  {% include 'header.html' %}
+  <div class="container" style="margin-top:20vh;">
+    <div class="board_wrap">
+        <div class="board_title">
+            <h2><strong><span style="color: #4595e6;">추억</span> 다이어리</strong></h2>
+            <p>친구들과의 추억을 기록해보세요.</p>
+        </div>
+        <div class="board_view_wrap">
+            <div class="board_view">
+                <div class="title">
+                    <span class="title_span">{{post.title}}</span>
+                </div>
+                <div class="info">
+                    <dl>
+                        <span class="info_dt">번호</span>
+                        <span class="info_dd">{{num}}</span>
+                    </dl>
+                    <dl>
+                        <span class="info_dt">글쓴이</span>
+                        <span class="info_dd">{{post.writer.username| slice:":-1"}}*</span>
+                    </dl>
+                    <dl>
+                        <span class="info_dt">작성일</span>
+                        <span class="info_dd">{{post.created|date:'Y-m-d'}}</span>
+                    </dl>
+                    <dl>
+                        <span class="info_dt">조회</span>
+                        <span class="info_dd">{{post.views}}</span>
+                    </dl>
+                </div>
+                {% if post.photo %}
+                <div class="column cont2">
+                    <img src="{{post.photo.url}}" height="180" width="280">
+                </div>
+                {% endif %}
+                <div class="column cont">
+                    <p class=post_body>{{post.body | linebreaksbr}}</p>
+                </div>
+            </div>
+            <div class="bt_wrap">
+                {% with page=num|make_page:5 %}
+                <a href="{% url 'board:index' page %}" class="on">목록</a>
+                {% endwith %}
+                {% if update_auth %}
+                <a href="{% url 'board:update' post.id %}">수정</a>
+                <a href="{% url 'board:delete' post.id %}">삭제</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>

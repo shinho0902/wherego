@@ -1,0 +1,178 @@
+{% load static %}
+
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="{% static 'img/어디고.png' %}">
+  <title>어디GO 채팅</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+
+
+    <style>
+
+    #sidebar > :last-child {
+        margin-bottom: 0 !important;
+    }
+
+    #find {
+
+      
+      background-color: rgba(0, 0, 0, 0);
+      left: 43%;
+      bottom: 14%;
+    }
+
+      
+      #file {
+        display: none;
+      }
+
+      .b1{
+        width: 500px;
+        height: 220px;
+        background-color: rgba(0, 0, 0, 0);
+        color: rgb(205, 221, 247);
+        border: 4px dashed;
+        float: left;
+        margin-left: -55%;
+        margin-top: 10%;
+        
+        box-sizing: border-box;
+      }
+
+      .main-wrapper {
+        flex:1;
+      }
+
+      .column {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+      }
+
+      #content {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        flex:1;
+      }
+
+      .content-title {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding: 20px;
+        margin-bottom: 10px;
+      }
+
+      .content-title span {
+        font-size:30px;
+      }
+   
+
+      .cafe-img img {
+
+        display:block;
+        width:100%;
+        height:auto;
+      }
+
+      .card-list {
+        display:grid;
+        grid-template-columns: repeat(auto-fit,minmax(300px,auto));
+        grid-gap:80px;
+        margin-bottom: 60px;
+      }
+
+      .card-body {
+        display:flex;
+        flex-direction:column;
+        align-items:left;
+      }
+
+      .card-title {
+        font-size:0.8em;
+        
+      }
+
+      .card-text {
+        font-size:1em;
+      }
+
+      .card {
+        text-decoration:none;
+        color:inherit;
+      }
+      
+      .warm {
+        color:#8D6E63;
+        font-weight:600;
+      }
+
+      .nature{
+        color:#558B2F;
+        font-weight:600;
+      }
+
+      .mono {
+        color:#757575;
+        font-weight:600;
+      }
+
+    </style>
+
+  </head>
+  <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+    
+    {% include 'header.html' %}
+
+      <div class="site-section unslate_co--section" style="height:auto;" id="services-section">
+        <div class="container" style="height:auto;">
+
+
+            <div id="main-wrapper" style="padding: 5em 0 5em 0; height:auto;">
+                <div class="container" style="height:auto;">  
+                    <div class="column" style="height:auto;">
+                        <div id="content" style="height:auto;">
+                          {% for stores in storeses%}
+                            <div class="content-title">
+                                <p><span>당신에게 맞는 <b class="center">{{ stores.category }}</b>을 찾았어요!</span></p>
+                              
+                            </div>
+                            <ul class="card-list">                             
+                                {% for store in stores.content %}
+                                  <a class="card" target='_blank' href="{{store.home_url}}">
+                                    <div class="card-header">
+                                      <span class="cafe-title">{{store.name}}</span>
+                  
+                                    </div>
+                                    <div class="cafe-img">
+                                      <img src="data:image/jpg;base64,{{store.img}}" />
+                                    </div>
+                                    <div class="card-body">
+                                      <span class="card-title">{{store.category}}</span>
+                                      <span class="card-text">{{store.roadAddress}}</span>
+                                    </div>
+                                  </a>
+                                {% endfor %} 
+                            </ul> 
+                            
+                            {% endfor %}                           
+                        </div>
+                    </div>
+                </div>
+            </div>               
+          </div>
+        </div>
+        
+            {% include 'footer.html' %}   
+    
+
+  </body>
+</html>

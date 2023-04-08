@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메일 발송</title>
+    <link rel="icon" href="{% static 'img/어디고.png' %}">
+    <link rel="icon" href="https://github.com/starryoon/new/blob/main/%EC%96%B4%EB%94%94%EA%B3%A0%ED%88%AC%EB%AA%85.png?raw=true">
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <script src="{% static 'js/signup.css' %}"></script>
+    <style>
+        .logo{
+            margin-left: 10%;
+        }
+        #st{
+            color: rgb(105, 144, 204);
+        }
+
+        
+        .member-footer{
+            margin-top:400px; margin-bottom:-700px; margin-left:-5px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div style="margin: auto;">
+
+  
+    
+        <div class="member" style="padding-top: 5%;">
+            <!-- 1. 로고 -->
+         
+            <img class="logo" src="https://cdn-icons-png.flaticon.com/128/747/747314.png">
+    
+            <hr>
+            <br>
+            <!-- 2. 필드 -->
+            <p style="font-size: x-large;"><span style="color:#3369e7;">인증 메일</span>이 발송 되었습니다.</p>
+            <h4><p>메일함에서 인증링크를 누르면 가입이 완료됩니다.</p></h4>
+            <br>
+            <p style="color: red;"> <유의사항> </p>
+            <ul>
+                <li><p style="font-size: small;">인증 메일은 발송 시점으로부터 24시간 동안만 유효하며,<br>
+                    재발송 시 기존에 발송된 인증 메일은 만료됩니다.</p>
+                </li>
+                <br>
+                <li><p style="font-size: small;">메일이 도착하지 않을 경우, 스팸함을 확인해주시기 바랍니다.</p>
+    
+                </li>
+            </ul>
+    
+        </div>
+        <div style="padding-top:160px;">
+        {% include 'footer.html' %}
+        </div>
+    
+        <script src="{% static 'js/scripts-dist.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/main2.js' %}"></script>
+    
+          
+    
+    </body>
+    </html>

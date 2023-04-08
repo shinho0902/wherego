@@ -1,0 +1,170 @@
+{% load static %}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+  <title>어디GO 이미지분석</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="{% static 'css/upload.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+
+    <style>
+    #sidebar > :last-child {
+        margin-bottom: 0 !important;
+    }
+
+    #find {
+
+      
+      background-color: rgba(0, 0, 0, 0);
+      left: 43%;
+      bottom: 14%;
+    }
+
+      
+      #file {
+        display: none;
+      }
+ 
+      .kakaotxt{
+        padding-bottom: 20%;
+      }
+
+      .kakao {
+        color: rgb(81, 65, 65);
+      }
+      .chat{
+        color: #3369e7;
+      }
+ 
+
+    </style>
+
+  </head>
+  <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+
+    {% include 'header.html' %}
+
+      <div class="site-section unslate_co--section" id="services-section">
+        <div class="container">
+          <div class="container">
+
+
+            <div id="main-wrapper">
+                <div class="container">
+                    <div class="row gtr-200">
+                        <div class="col-4 col-12-medium">
+                            <div id="sidebar">
+
+                                <!-- Sidebar -->
+                                    <section>
+                                      <div>
+                                        <h2><strong style="color: rgb(146, 146, 146);">STEP.2</strong></h2>
+                                        <br>
+                                        {% if not request.session.center_name %}
+                                        <h3 style="font-family: 'IBM Plex Sans KR', sans-serif; font-weight:bold;">[여기로]<b class="center">GO</b>
+                                          <br>
+                                          
+                                      
+                                          
+                                          </h3>
+                                          <br>
+                                        </div>
+                                        <p><b class="center">어디고</b>에서<br><b class="center">"ㅇㅇ역"</b>근처로<br>이미지 분석을 통해 <br>
+                                          
+                                          {% else %}
+                                        
+                                          <h3 style="font-family: 'IBM Plex Sans KR', sans-serif; font-weight:bold;">[{{ request.session.center_name }}]으로<b class="center">GO</b>
+                                            <br>
+                                          
+                                      
+                                          
+                                          </h3>
+                                          <br>
+                                        </div>
+                                        <p><b class="center">어디고</b>에서<br><b class="center">"{{ request.session.center_name }}역"</b>근처로<br>이미지 분석을 통해 <br>
+                                          
+                                        {% endif %}
+                                      <b class="center">AI</b>가 여러분이 원하는 카페를 찾아드려요.</p>
+                                        
+                                        <p style="font-size: x-small;">*폭넓은 장소 추천은 추후 업데이트 예정입니다.</p>
+                                        <footer>
+    
+                                        </footer>
+                                    </section>
+
+                                    <section>
+                                        <!-- <h3>중간지점을 입력해주세요.</h3> -->
+
+                                        <ul class="style2">
+                                    
+                                        </ul>
+                                    </section>
+
+                            </div>
+                        </div>
+
+                        <div class="col-8 col-12-medium imp-medium">
+                            <div id="content">
+
+                              
+                              <form action="{% url 'imageupload:result' %}" style="width:100%" method="POST" enctype="multipart/form-data" id="frm">
+                                {% csrf_token %}
+                                <div id="root">
+                                    <h2 class="title">Image Upload</h2>
+                                    <hr>
+                                    <div class="contents">
+                                      <div class="upload-box">
+                                        <div id="drop-file" class="drag-file">
+                                          <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image" >
+                                          <p class="message">Drag files to upload</p>
+                                          <img src="" alt="미리보기 이미지" class="preview">
+                                        </div>
+                                        <label class="file-label" for="chooseFile">Choose Image</label>
+                                        <input class="file" name="img" id="chooseFile" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif" required>
+                                        <button type="button" id="find" onclick="return chk_form()"><img src="{% static 'img/find.png' %}" alt=""></button>
+                                      
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                                  <script src="{% static 'js/upload.js' %}"></script>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                                  {% include 'footer.html' %}
+                              
+    <script>
+      function chk_form() {
+          if(document.getElementById("chooseFile").value==''){
+              alert("이미지를 넣어주세요.");
+              return false;
+          }
+          
+          let center = '{{ request.session.center_name }}';
+          
+          if (!center){
+            alert("중간지점을 먼저 입력해주세요.");
+            return false;
+          }
+          document.getElementById('frm').submit();
+      }
+      
+      </script>
+
+  </body>
+</html>

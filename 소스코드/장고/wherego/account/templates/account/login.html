@@ -1,0 +1,76 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="icon" href="{% static 'img/어디고.png' %}">
+        <link rel="stylesheet" href="{% static 'css/login.css' %}">
+        <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+        <title>로그인</title>
+
+    </head>
+    <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+        <section class="login" style="padding-left:2px; margin-top:5vh;">
+            
+            <h3>
+                <a href="{% url 'main:index' %}">
+                <div class="container">
+                    <img src="{% static 'img/어디고.png' %}">
+                </div>
+                </a>
+            </h3>
+            <!-- <h4>로그인</h4> -->
+            <ul>
+                <form id="login" method="POST" action="">
+                  {% csrf_token %}
+                  {% include 'account/messages.html' %}
+                    <li>
+                        <input required id="userid" type="text" placeholder="이메일 형식으로 입력하세요." name="username"/>
+                    
+                    </li>
+
+                    <li>
+                        <input required id="userpw" type="password" placeholder="비밀번호" minlength="10" maxlength="20" name="password"/>
+
+                    </li>
+
+                    <li>
+                        <input type="checkbox" id="chk_id" name="chk_id" /><label for="chk_id">아이디 저장</label>
+                    </li>
+                    <li><input type="submit" id="log" value="로그인"></li>
+        
+                    
+                </form>
+        
+            </ul>
+        <div>
+            <ul>
+                <li><a href="{% url 'account:agree' %}">회원가입</a></li>
+                <li><a href="">아이디 찾기</a></li>
+                <li><a href="">비밀번호 찾기</a></li>
+
+            </ul>
+        </div>
+
+
+
+
+     <!-- 콜백  url 다시 넣어서 수정예정 -->
+    <!-- 콜백 url 다시 넣어서 수정예정 -->
+    <!-- 카카오 아이디로 로그인하기 넣을예정 -->
+
+
+
+<a href="{% url 'account:kakao-login' %}" style="border-bottom:none;"><img src="{% static 'img/kakao_login.png' %}" /></a>
+
+{% include 'footer.html' %}
+</section>
+        
+        </section>
+
+    </body>
+</html>

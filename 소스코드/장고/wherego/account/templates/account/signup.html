@@ -1,0 +1,190 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>어디고 회원가입</title>
+    <link rel="icon" href="{% static 'img/어디고.png' %}">
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <script src="{% static 'js/signup.js' %}"></script>
+</head>
+
+
+<body>
+    
+    <div class="member">
+        <!-- 1. 로고 -->
+        <a href="{% url 'main:index' %}"><img class="logo" src="{% static 'img/어디고.png' %}" alt="메인화면" /></a>
+        <hr>
+        <br>
+        <!-- 2. 필드 -->
+        
+        <form class="signup-wrap" action="{% url 'account:signup' %}" method="POST" id="frm">
+          {% csrf_token %}
+          
+          <!-- 5. 이메일_전화번호 -->
+          <div class="field">
+            <b>이메일</b>
+            <input type="email" placeholder="abc123@example.com" id="email" name="email" required>
+            <span id="email_pro_label"></span>
+        </div>
+          <div class="field">
+              <b>닉네임</b>
+              <span class="placehold-text"><input name="id" type="text" id="user" placeholder="*영문,숫자 포함 1~10자 까지 가능합니다." minlength="1" maxlength="10" size="10" pattern="[a-zA-Z0-9]{6,10}" required></span>
+              <span id="id_pro_label"></span>
+          </div>
+          <div class="field">
+              <b>비밀번호</b>
+              <input class="userpw" type="password" name="password1" id="pw" placeholder="*영문,숫자,특수문자 각 1개이상씩 포함 10~20자" onkeyup="pw_cond()" value="" minlength="10" maxlength="20" size="15" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,20}">
+              <span id="pw_pro_label"></span>
+          </div>
+          <div class="field">
+              <b>비밀번호 재확인</b>
+              <input class="userpw-confirm" type="password" id="pw_cf" placeholder="*영문과 숫자 포함 10~20자 이내로 입력 가능합니다."onkeyup="check_pw()" value="" maxlength="20" size="15" required>
+              <span id="pw_check_msg"></span>
+          </div>
+          <div class="field">
+              <b>이름</b>
+              <input id="username" type="text" name="username" placeholder="이름을 입력하세요." required>
+          </div>
+
+          <!-- 3. 필드(생년월일) -->
+          <div class="field birth">
+              <b>생년월일</b>
+              <div>
+                  <input type="text" placeholder="YYYY" name="year" minlength="4" maxlength="4" id="year" onkeyup="checkValidDate()">                 
+                  <select name="month" id="month" onchange="checkValidDate()">
+                      <option value="none">월</option>
+                      <option value="1">1월</option>
+                      <option value="2">2월</option>
+                      <option value="3">3월</option>
+                      <option value="4">4월</option>
+                      <option value="5">5월</option>
+                      <option value="6">6월</option>
+                      <option value="7">7월</option>
+                      <option value="8">8월</option>
+                      <option value="9">9월</option>
+                      <option value="10">10월</option>
+                      <option value="11">11월</option>
+                      <option value="12">12월</option>
+                  </select>
+                  <input type="text" placeholder="일" name="day" maxlength="2" id="day" onkeyup="checkValidDate()">
+              </div>
+              <span id="birth_check_msg"></span>
+          </div>
+
+          <!-- 4. 필드(성별) -->
+          <div class="field gender">
+              <b>성별</b>
+              <div>
+                  <label><input type="radio" name="gender" value="m">남자</label>
+                  <label><input type="radio" name="gender" value="w">여자</label>
+              </div>
+          </div>
+
+
+          <!-- 6. 가입하기 버튼 -->
+          <div class="submit-wrap">
+            <button type="button" id="signup-btn" onclick="join_form_check()">가입하기</button>
+          </div>
+        </form>
+       
+
+        <!-- 7. 푸터 -->
+        
+{% include 'footer.html' %}
+    </div>
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
+<script type="text/javascript">
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    var csrftoken = getCookie('csrftoken');
+
+
+    
+
+
+    $(document).ready(function(){
+        $('#user').keyup(function(){
+            const regExp = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
+            if ( $('#user').val().length >= 1 & $('#user').val().length <= 10 & !regExp.test($('#user').val())) {
+                var id = $(this).val();
+                $.ajax({
+                    type : 'POST',
+                    url : '{% url "account:id_check" %}',
+                    data:
+                    {
+                        id: id,
+                        'csrfmiddlewaretoken':  csrftoken,
+                    },
+                    success : function(result) {
+                        if (result["result"] == "ok") {
+                            $("#id_pro_label").html("사용 가능한 닉네임 입니다.");
+                            $("#id_pro_label").css("color","blue");
+                        } else {
+                            $("#id_pro_label").html("중복 닉네임 입니다.");
+                            $("#id_pro_label").css("color","red");
+                        }
+                    }
+                }); // end ajax
+            }
+            else{
+                $("#id_pro_label").html("1자 이상, 10자 이하로 입력해주세요.");
+                $("#id_pro_label").css("color","red");
+            }
+        }); // end keyup
+    });
+
+
+
+    $(document).ready(function(){
+        $('#email').keyup(function(){
+            var exptext = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+            if ( $('#email').val().length >= 1 & exptext.test($('#email').val())==true) {
+                var email = $(this).val();
+                $.ajax({
+                    type : 'POST',
+                    url : '{% url "account:email_check" %}',
+                    data:
+                    {
+                        email: email,
+                        'csrfmiddlewaretoken':  csrftoken,
+                    },
+                    success : function(result) {
+                        if (result["result"] == "ok") {
+                            $("#email_pro_label").html("사용 가능한 이메일 입니다.");
+                            $("#email_pro_label").css("color","blue");
+                        } else {
+                            $("#email_pro_label").html("중복 이메일 입니다.");
+                            $("#email_pro_label").css("color","red");
+                        }
+                    }
+                }); // end ajax
+            }
+            else{
+                $("#email_pro_label").html("이메일 형식이 올바르지 않습니다.");
+                $("#email_pro_label").css("color","red");
+            }
+        }); // end keyup
+    });
+    </script>
+</html>

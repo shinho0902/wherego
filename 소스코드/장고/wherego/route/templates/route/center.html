@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>WhereGo</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+		<link rel="shortcut icon" href="{% static 'img/어디고.png' %}">
+		
+	</head>
+	<style>
+	html, body {
+		margin: 0;
+		padding: 0;
+		height: 100%; 
+		}
+	  #my{
+		margin-left: 240%;
+		position: relative;
+		bottom: 70px;
+	   
+	   
+	  }
+	  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap');
+	  p {
+		  font-family: 'IBM Plex Sans KR', sans-serif;
+		  color: black;
+		  font-weight: bold;
+		  font-size: medium;
+	  }
+	  
+	  .newDiv {
+		display:flex;
+		margin-bottom:30px;
+		
+		
+	  }
+  
+	  .newDivInput {
+		width: 400%;
+		border: 2px solid;
+		
+	  }
+	  #testForm{
+		width: 150%;
+	  }
+	  .removeInput{
+		width: 30%;
+		display: flex;
+		border-radius: 30px;
+		margin-left: 20px;
+		text-align: center;
+		font-family: 'IBM Plex Sans KR', sans-serif;
+		color: black;
+		background-color: white;
+		font-size:large;
+		border:none;
+	  
+  
+	  }
+	  .removeInput:hover{
+		color: red;
+		background-color: white;
+		border-color: white;
+		border:none;
+		outline: 0;
+  
+	  }
+	  .removeInput:active{
+		border-color: white;
+		background-color: white;
+		border:none;
+		outline: 0;
+		
+	  }
+	  .removeInput:after{
+		background-color: white;
+		border-color: white;
+		border:none;
+		outline: 0;
+  
+	  }
+	  .removeInput:focus{
+		background-color: white;
+		border-color: white;
+		border:none;
+		outline: 0;
+  
+	  }
+  
+  
+	  
+	  .ho:hover {
+		color: #3369e7;
+	  
+	  }
+	  #current{
+		color: #3369e7;
+		font-weight: bolder;
+		font-weight: 900;
+	  }
+	  .bt{
+		border: 0;
+		background-color: transparent;
+	  }
+	  .insertButton{
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		background-color: transparent; 
+		
+	  }
+  
+  
+  
+	  </style>
+
+	<body class="is-preload left-sidebar">
+		<div id="page-wrapper">
+		
+			{% include 'header.html' %}
+			
+			{%block content%}
+
+
+			<!-- Header -->
+
+			<!-- Main -->
+			<div id="main-wrapper">
+                <div class="container">
+                    <div class="row gtr-200">
+                        <div class="col-4 col-12-medium">
+                            <div id="sidebar">
+
+                                <!-- Sidebar -->
+                                    <section>
+                                      <div>
+										<h2 ><strong style="color: rgb(146, 146, 146);">STEP.1</strong></h2>
+										<br>
+                                        <h3 style="font-family: 'IBM Plex Sans KR', sans-serif; font-weight:bold;">어디로<b class="center">GO</b>
+                                          <br>
+                                          어디서 볼래?
+                                          
+                                      
+                                          
+                                          </h3>
+                                        </div>
+                                        <br>
+                                        <p><b class="center">어디고</b>서비스는<br>장소를 입력 하면<br> 중간지점을 찾아 알려줍니다.</p>
+                                        <footer>
+    
+                                        </footer>
+                                    </section>
+
+                                    <section>
+                                        <!-- <h3>중간지점을 입력해주세요.</h3> -->
+
+                                        <ul class="style2">
+                                    
+                                        </ul>
+                                    </section>
+
+								</div>
+							</div>
+							<div class="col-8 col-12-medium imp-medium">
+								<div id="content">
+
+									<!-- Content -->
+								
+										<h2 style="padding-left: 2%;"><strong>LOCATION</strong></h2>
+
+											<div class="col-5 col-12-medium">
+													<form id="testForm" action="{% url 'route:index' %}" method="POST">
+														{% csrf_token %}
+														<p>장소를 추가해주세요</p>
+													</form>
+												</div>
+												<div id="go" style="padding-left: 8%;">
+													<span><span id="insertButton" style="float:left; margin-top:30px;"><img src="https://github.com/starryoon/new/blob/main/free-icon-add-contact-8377190.png?raw=true"><p style="color: black; font-size:large;">추가하기</p></span><button id="insertButton2" style="background-color: #4775e0; margin-left:-50%"><p style="color: #fff; font-size:x-large;">GO!</p></button></span>
+												</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer -->
+				<div id="footer-wrapper">
+					
+				{% include 'footer.html' %}
+				</div>
+				{% endblock %}
+
+
+		<!-- Scripts -->
+			<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+			<script src="{% static 'js/jquery.dropotron.min.js' %}"></script>
+			<script src="{% static 'js/browser.min.js' %}"></script>
+			<script src="{% static 'js/main.js' %}"></script>
+			<script src="{% static 'js/main2.js' %}"></script>
+			<script src="{% static 'js/center.js' %}"></script>
+			<script src="{% static 'js/scripts-dist.js' %}"></script>
+			<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+			<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{API_KEY}}&submodules=geocoder"></script>
+			<script>
+
+
+				for(let i = 0; i < 6; i++){
+					$(document).on('click','#address_kakao'+i,function(){
+						//카카오 지도 발생
+						new daum.Postcode({
+							oncomplete: function(data) { //선택시 입력값 세팅
+								naver.maps.Service.geocode({ address: data.address }, function(status, response) {
+									if (status === naver.maps.Service.Status.ERROR) {
+										return alert('Something wrong!');
+									}
+									if (response.result.items.length != 0){
+										document.getElementById("address_kakao"+i).value = data.address;
+									}
+									else{
+										alert("위치정보를 가져올 수 없습니다. 다른 주소를 입력해주세요.");
+									}
+								});
+							}
+						}).open();
+					})
+				}
+			    $(document).ready(function(){
+					$('#insertButton2').click(function(){
+						
+						lat = [];
+						lon = [];
+						var testForm = $("#testForm");
+						var len_target = 0
+						testForm.children('div').each(function (){
+							var target = $(this).children('input[type=text]');
+							if(target.val()){
+								len_target = len_target + 1
+								naver.maps.Service.geocode({ address: target.val() }, function(status, response) {
+									if (status === naver.maps.Service.Status.ERROR) {
+										return alert('Something wrong!');
+									}
+									else{
+										lon.push(response.result.items[0].point.x);
+										lat.push(response.result.items[0].point.y);
+									}
+								});
+							}
+						});
+						setTimeout(() => {
+							if (len_target>=2){
+								for(var i=0; i<lon.length; i++){
+									var newInput = document.createElement("input");
+									newInput.setAttribute('size',20);
+									newInput.setAttribute("id", "lon"+i);
+									newInput.setAttribute("type", "hidden");
+									newInput.setAttribute("name", "lon");
+									newInput.setAttribute("value", lon[i]);
+		
+		
+									var newInput2 = document.createElement("input");
+									newInput2.setAttribute('size',20);
+									newInput2.setAttribute("id", "lat"+i);
+									newInput2.setAttribute("type", "hidden");
+									newInput2.setAttribute("name", "lat");
+									newInput2.setAttribute("value", lat[i]);
+		
+									testForm.append(newInput);
+									testForm.append(newInput2);
+		
+								}
+								testForm.submit();
+								
+								for(var i=0; i<lon.length; i++){
+									$("#lon"+i).remove();
+									$("#lat"+i).remove();
+								}
+							}else{
+								alert("주소를 2개 이상 입력해주세요.");
+							}
+
+
+						}, "200");
+						
+					});
+				}); // end keyup
+	
+			</script>
+	</body>
+</html>

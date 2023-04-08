@@ -1,0 +1,424 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<link rel="shortcut icon" href="{% static 'img/어디고.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap" rel="stylesheet">
+    
+
+<style>
+    
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap');
+
+p {
+    font-family: 'Dongle', sans-serif;
+}
+
+#page-wrapper {
+    margin: 0;
+    padding: 0;
+    height: 100%; 
+ }
+
+
+div.left {
+    width: 50%;
+    float: left;
+
+}
+div.right {
+    display:flex;
+    justify-content:left;
+    flex-direction:column;
+
+}
+.b {
+    border: solid 17px;
+    border-color: #3369e7;
+    width: 350px;
+    height: 200px;
+    border-radius: 60px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.container2{
+    display: flex;
+    flex-wrap: wrap; 
+    width: 100%;
+    height: 100%;
+    justify-content:space-around;
+    
+}
+.bus{
+
+    padding-left: 250px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap');
+p {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    color: black;
+    font-weight: bold;
+    font-size: medium;
+}
+.GO{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.regular {
+    font-weight: 400;
+  }
+   
+  .medium {
+    font-weight: 500;
+  }
+   
+  .bold {
+    font-weight: 700;
+    font-size: 150%;
+  }
+   body{
+    background-color: white;
+    color: black;
+   }
+
+   .ai_btns {
+    display:flex;
+    justify-content: space-around;
+
+   }
+
+   .subway_span {
+    font-size:30px;
+    font-weight:600;
+   }
+
+   .go_span {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:40px;
+   }
+
+   .ai_btn img {
+    margin-bottom:10px;
+   }
+
+   .ai_btn_info {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+   }
+
+
+</style>
+
+<body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+{% include 'header.html' %}
+<div style="margin:0 auto; width:100%; hieght:100%;">
+    <div class="container2" style="padding-top: 17vh; max-width: 1140px; margin-right: auto;margin-left: auto; height:100%">
+        <div class="left" id="map" style="max-width: 100%; height:auto;"></div>
+        <div class="right">
+            <div class="b">
+                <span class="subway_span">{{ subway_list }}역</span>
+            </div>
+
+            <div class="GO" style="padding-top: 10%;">
+                <span class="go_span">
+                    <p><strong style="color:#3369e7 ; font-size:30px;">중간지점</strong><br></p>
+                    <p><b style="font-size:30px;">장소추천 받으러GO</b></p>
+                </span><br>
+                
+            </div>
+            <div class= "ai_btns">
+                <div class="ai_btn">
+                    <a href="{% url 'chat:index' %}">
+                    <img src="https://github.com/starryoon/new/blob/main/free-icon-bubble-speak-1646767%20(1).png?raw=true" class="chat"></a>
+                    <span class="ai_btn_info" style="font-size: 20px; font-weight:bold">텍스트 분석</span>
+                </div>
+                <div class="ai_btn">
+                    <a href="{% url 'imageupload:index' %}">
+                    <img src="https://github.com/starryoon/new/blob/main/free-icon-picture-1057196%20(1).png?raw=true" class="image"></a>
+                    <span class="ai_btn_info" style="font-size: 20px; font-weight:bold; margin-left:10%;">이미지 분석</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{NAVER_API_KEY}}"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{NAVER_API_KEY}}&submodules=geocoder"></script>
+
+<script>
+    var people = JSON.parse("{{ clients|escapejs }}");
+    var polygons = JSON.parse("{{ polygons|escapejs }}");
+    var subways = JSON.parse("{{subway_json|escapejs}}");
+    center_point = {title: '중심위치', latlng: new naver.maps.LatLng(subways["0"]['lat'],subways["0"]['lng'])};
+    
+    var mapOptions = {
+        center: center_point.latlng,
+        zoom: 15
+    };
+    var map = new naver.maps.Map('map', mapOptions);
+    // 마커 표시할 위치와 title 배열 
+    var positions = new Array();
+    for(var i=1; i < Object.keys(people).length+1; i++){
+        positions.push(
+            {title:""+i,latlng: new naver.maps.LatLng(people[i+""][0], people[i+""][1])}
+        )
+    }
+
+    var markers=[];
+    for (var i = 0; i < positions.length; i++){
+        // 마커를 생성
+        var marker = new naver.maps.Marker({
+            map:map, // 마커를 표시할 지도
+            position:positions[i].latlng, // 마커를 표시할 위치 
+            title : positions[i].title, // 마커의 타이틀 
+        });
+        markers.push(marker);
+    }
+
+    // 마커의 지표만 있는 배열 따로 생성 
+    var locations = new Array();
+    for (var i = 1; i < Object.keys(polygons).length+1; i++){
+        locations.push(new naver.maps.LatLng(polygons[i+""][0], polygons[i+""][1]));
+    };
+
+    // 경계 구역 설정 
+    var polygon = new naver.maps.Polygon({
+        map:map,
+        paths: [
+            locations
+        ],
+        fillColor: '#ff0000',
+        fillOpacity: 0.1,
+        strokeColor: '#ff0000',
+        strokeOpacity: 0.1,
+        strokeWeight: 1
+    })
+
+
+
+    //중심 좌표 표시하기
+    
+    var centerpoint_markerOptions = {
+        position: center_point.latlng, //마커 표시 위치
+        map: map,
+        title : center_point.title, // 마커의 타이틀 
+        icon: {
+            url: '{% static "img/marker.png" %}',
+            scaledSize: new naver.maps.Size(25, 30),
+            origin: new naver.maps.Point(0, 0), //스프라이트 이미지의 아이콘을 사용할 때 이미지의 원점
+            anchor: new naver.maps.Point(6, 28) //이미지가 가리키는 지점과 마커가 위치한 지점을 일치
+                                                // 왼쪽 위(0, 0), 오른쪽 아래(1, 1)
+        }
+    };
+    var center_marker = new naver.maps.Marker(centerpoint_markerOptions);   
+    
+
+    naver.maps.Event.addListener(map, 'click', function(){
+        updateMarkers(map, markers);
+    })
+
+    function updateMarkers(map, markers) {
+
+        var mapBounds = map.getBounds();
+        var marker, position;
+    
+        for (var i = 0; i < markers.length; i++) {
+    
+            marker = markers[i]
+            position = marker.getPosition();
+    
+            if (mapBounds.hasLatLng(position)) {
+                showMarker(map, marker);
+            } else {
+                hideMarker(map, marker);
+            }
+        }
+    }
+    
+    function showMarker(map, marker) {
+        if (marker.setMap()) return;
+        marker.setMap(map);
+    }
+    
+    function hideMarker(map, marker) {
+        if (!marker.setMap()) return;
+        marker.setMap(null);
+    }
+
+    var color=["#FF0000", "#FF8000", "#FFFF00", "#80FF00", "#00FF00", "#00FF80", "#00FFFF", "#0080FF", "#0000FF", "#7F00FF", "#FF00FF", "#FF007F", "#808080"];
+    function getClickHandler(seq){
+        return function(e){
+            // 출발
+            var sx = positions[seq].latlng.x;
+            var sy = positions[seq].latlng.y;
+            // 도착
+            var ex = center_point.latlng.x;
+            var ey = center_point.latlng.y;
+
+            var time;
+            function searchPubTransPathAJAX() {
+                var xhr = new XMLHttpRequest();
+                //ODsay apiKey 입력
+                var url = "https://api.odsay.com/v1/api/searchPubTransPathT?&SX="+sx+"&SY="+sy+"&EX="+ex+"&EY="+ey+"&apiKey={{ODSAY_API_KEY}}";
+                xhr.open("GET", url, true);
+                xhr.send();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        console.log( JSON.parse(xhr.responseText) ); // <- xhr.responseText 로 결과를 가져올 수 있음
+                        //노선그래픽 데이터 호출
+                        callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
+                        time=JSON.parse(xhr.responseText)["result"]["path"][0].info.totalTime;
+                        var firststartstation=JSON.parse(xhr.responseText)["result"]["path"][0].info.firstStartStation
+                        var lastendstation=JSON.parse(xhr.responseText)["result"]["path"][0].info.lastEndStation
+                        console.log(firststartstation+"에서 "+lastendstation+"까지 걸리는 시간: "+time+"분");
+                    }
+                    else {
+                        time=0;
+                    }
+                }
+                return new Promise(resolve => setTimeout(() => resolve(time),1000));
+            }
+
+            //길찾기 API 호출
+            //searchPubTransPathAJAX();
+
+            function callMapObjApiAJAX(mapObj){
+                var xhr = new XMLHttpRequest();
+                //ODsay apiKey 입력
+                var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@"+mapObj+"&apiKey={{ODSAY_API_KEY}}";
+                xhr.open("GET", url, true);
+                xhr.send();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var resultJsonData = JSON.parse(xhr.responseText);
+                        drawNaverMarker(sx,sy);             // 출발지 마커 표시
+                        drawNaverPolyLine(resultJsonData);      // 노선그래픽데이터 지도위 표시
+                        // boundary 데이터가 있을경우, 해당 boundary로 지도이동
+                        if(resultJsonData.result.boundary){
+                                var boundary = new naver.maps.LatLngBounds(
+                                        new naver.maps.LatLng(resultJsonData.result.boundary.top, resultJsonData.result.boundary.left),
+                                        new naver.maps.LatLng(resultJsonData.result.boundary.bottom, resultJsonData.result.boundary.right)
+                                        );
+                                map.panToBounds(boundary);
+                        }
+                    }
+                }
+            }
+
+            // 지도위 출발지 마커 표시해주는 함수
+            function drawNaverMarker(x,y){
+                var marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(y, x),
+                    map: map
+                });
+            }
+
+            // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
+            var polyline;
+            function drawNaverPolyLine(data){
+                console.log(data)
+                var lineArray;
+                for(var i = 0 ; i < data.result.lane.length; i++){
+                    for(var j=0 ; j <data.result.lane[i].section.length; j++){
+                        lineArray = null;
+                        lineArray = new Array();
+                        for(var k=0 ; k < data.result.lane[i].section[j].graphPos.length; k++){
+                            lineArray.push(new naver.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
+                        }
+                        
+                        //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분
+                        if(data.result.lane[i].class==1){ //버스
+                                polyline = new naver.maps.Polyline({
+                                map: map,
+                                path: lineArray,
+                                strokeWeight: 3,
+                                strokeColor: color[seq],
+                                strokeOpacity: 0.5
+                            });
+                        }
+                        else{ //지하철
+                                polyline = new naver.maps.Polyline({
+                                map: map,
+                                path: lineArray,
+                                strokeWeight: 5,
+                                strokeColor: color[seq]
+                            });
+                        }
+                    }
+                }
+            }
+            async function gettime(){
+                const a=await searchPubTransPathAJAX();
+                var contentString = [
+                    '<div class="iw_inner" style="padding:7px; display:flex; justify-content:center; text-align:center;" >',
+                    '       <p style="font-family:Dongle; font-size:2.5rem; color:#fff; margin:0;">'+a+'분</p>',
+                    '</div>'
+                ].join('');
+
+                var contentString2=[
+                    '<div class="iw_inner" style="padding:7px; display:flex; justify-content:center; text-align:center;" >',
+                    '       <p style="font-family:Dongle; font-size:2.5rem; color:#fff; margin:0;">출발지와 도착지가 일치합니다.</p>',
+                    '</div>'
+                ].join('');
+
+                if(time==0){
+                    // 정보창 옵션 설정
+                    var infowindow = new naver.maps.InfoWindow({
+                        position: markers[seq],
+                        content: contentString2,
+                        backgroundColor: '#3ca1d5', //정보 창 배경색
+                        borderColor: '#3ca1d5', //정보 창 테두리색
+                        borderWidth: 3, //정보 창 테두리 두께
+                        anchorSkew: true, //기본 말풍선 꼬리 기울임 효과 사용 여부
+                        anchorSize: new naver.maps.Size(10, 8), //말풍선 꼬리 크기(width, height)
+                        disableAutoPan: true, //정보 창 열 때 정보 창 전체 보여줄 수 있는 자동 이동 사용 여부
+                        disableAnchor: false, // 기본 말풍선 꼬리 사용 여부
+                    });
+                }
+                else{
+                    // 정보창 옵션 설정
+                    var infowindow = new naver.maps.InfoWindow({
+                        position: markers[seq],
+                        content: contentString,
+                        backgroundColor: '#3ca1d5', //정보 창 배경색
+                        borderColor: '#3ca1d5', //정보 창 테두리색
+                        borderWidth: 3, //정보 창 테두리 두께
+                        anchorSkew: true, //기본 말풍선 꼬리 기울임 효과 사용 여부
+                        anchorSize: new naver.maps.Size(10, 8), //말풍선 꼬리 크기(width, height)
+                        disableAutoPan: true, //정보 창 열 때 정보 창 전체 보여줄 수 있는 자동 이동 사용 여부
+                        disableAnchor: false, // 기본 말풍선 꼬리 사용 여부
+                    });
+                }
+
+                //정보창 띄우기
+                if (infowindow.getMap()){
+                    infowindow.close();
+                } else {
+                    infowindow.open(map, markers[seq]);
+                }
+            }
+            gettime();
+        }
+    }
+
+    for(var i=0;i<markers.length;i++){
+        naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+    }
+</script>
+</body>
+</html>

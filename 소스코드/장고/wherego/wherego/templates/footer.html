@@ -1,0 +1,53 @@
+<style>
+
+  .member-footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.member-footer div a:hover{
+    text-decoration: underline;
+    color:#88b5f3
+}
+
+.member-footer div a:after{
+    content:'|';
+    font-size: 10px;
+    color:#bbb;
+    margin-right: 5px;
+    margin-left: 7px;
+    /*살짝 내려가 있기 때문에 위로 올려주기 위해 transform 사용하기*/
+    display: inline-block;
+    transform: translateY(-1px);
+
+}
+
+.member-footer div a:last-child:after{
+    display: none;
+}
+
+#lasta:after{
+   content:none;
+}
+  
+
+
+
+</style>
+
+
+<div>
+
+    <div class="member-footer">
+      <div>
+          <a href="#none">이용약관</a>
+          <a href="#none">개인정보처리방침</a>
+          <a href="#none" id="lasta" style="content:none;">고객센터</a>
+          <br>
+      
+
+          <li>copyright &copy;2023어디GO All rights reserved</li>
+        </div>
+    </div>
+</div>

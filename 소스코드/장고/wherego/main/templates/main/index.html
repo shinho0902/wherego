@@ -1,0 +1,282 @@
+{% load static %}
+    
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+	<link rel="shortcut icon" href="{% static 'img/어디고.png' %}">
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+
+	<title>어디GO</title>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/component.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
+
+  
+	</head>
+	<body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+
+	
+
+	<div class="unslate_co--site-wrap">
+
+		<div class="unslate_co--site-inner">
+	  
+
+		{% include 'header.html' %}
+		<!-- END nav -->
+		<div class="cover-v1 jarallax bg-light" id="home-section"  style="padding-bottom: 30%;">
+			<div class="container">
+			  <div class="row align-items-center">
+				  
+				<div class="col-md-8 mx-auto text-center">
+				  <h1 class="heading gsap-reveal-hero"  style="margin-top: 20%; color:rgb(71, 72, 72)">어디서 볼까?</h1>
+				  <p><h3 class="subheading gsap-reveal-hero">여러분의 취향에 맞는 <strong><span class="center">장소</span></strong>를<br><span class="center"><strong>AI</strong></span>가 알려드릴게요 </h2></p>
+				</div>
+			
+
+			</div>
+			<div style="padding-left:10%;">
+				<span><img src="https://raw.githubusercontent.com/starryoon/new/301bbf9d27f007fcfdf47470b2e2defc735255c4/placeholder.png"></span>
+				<span><img src="https://github.com/starryoon/new/blob/main/angle-double-small-right.png?raw=true"></span>
+				<img src="https://raw.githubusercontent.com/starryoon/new/1a8c6f30ec8d79465411f8dad5d678804a9b45eb/smartphone.png"><span class="center" style="font-weight: 900; padding-right:15px; padding-left:15px; font-family: 'IBM Plex Sans KR', sans-serif;">OR</span>
+				<span><img src="https://raw.githubusercontent.com/starryoon/new/122ad7fe3091b9d3f5596ac11c611e1d89fc33c8/image.png"></span>
+				<span><img src="https://github.com/starryoon/new/blob/main/angle-double-small-right.png?raw=true"></span>
+				<span><img src="https://raw.githubusercontent.com/starryoon/new/779bf550a48e4b0cf2fb078d830a4ab9e078c5c3/artificial-intelligence.png"></span>
+			   
+				
+	
+			  </div>
+			  <div style="padding-left: 10%;">
+				<br>
+				<span><p>1.중간지점을 찾<b class="center">GO</b><b style="padding-left: 22%;">2.채팅 OR 이미지 업로드<b class="center">GO</b></b><b style="padding-left: 17%;">3.AI가 분석해서 장소 추천</b></p></span>
+			   
+				
+	
+			  </div>
+		</div>
+		</div>
+		<!-- <div style="margin-bottom: 50%;">
+
+		</div> -->
+		<!-- END .cover-v1 -->
+
+		<div class="site-section unslate_co--section" id="services-section">
+		<div class="container">
+			<div class="section-heading-wrap text-center mb-5" data-aos="fade-up">
+				<h2 class="heading-h2 text-center divider"><strong>어디<span class="go">GO</strong></span>기능 사용법</h2>
+			
+			</div>
+
+			<div class="row ">
+
+				<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+				  <div class="service d-flex h-100">
+					<div class="service-number mr-4"><span>01</span></div>
+					<div class="service-about">
+					  <h3 class="center"><strong>중간 장소</strong></h3>
+					  <p>강남역? 홍대입구? 중간장소 기능을 이용해 <br>위치부터 설정해주세요.</p>
+					</div>
+				  </div>
+				</div>
+
+				<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+					<div class="service d-flex h-100">
+					  <div class="service-number mr-4"><span>02</span></div>
+					  <div class="service-about">
+						<h3 class="center"><strong>채팅 분석</strong></h3>
+						<p>친구들과의 채팅으로 텍스트 분석을 통해<br> AI에게 장소를 추천 받아보세요.</p>
+					  </div>
+					</div>
+			</div>
+
+			<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+				<div class="service d-flex h-100">
+				  <div class="service-number mr-4"><span>03</span></div>
+				  <div class="service-about">
+					<h3 class="center"><strong>이미지 분석</strong></h3>
+					<p>채팅이 귀찮다면?<br> 선호하는 분위기의 이미지를 넣고<br> AI에게 장소를 추천 받아보세요.</p>
+				  </div>
+				</div>
+			  </div>
+  
+
+			  <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+			  <div class="service d-flex h-100">
+				<div class="service-number mr-4"><span>04</span></div>
+				<div class="service-about">
+				  <h3 class="center"><strong>미니게임</strong></h3>
+				  <p>친구들과의 내기게임으로<br> 만나기 전 수행할 내기를 걸어보세요.</p>
+				</div>
+			  </div>
+			</div>
+  
+
+			</div>
+		</div>
+		</div>
+
+
+
+
+		
+
+		<div class="unslate_co--section" id="about-section">
+			<div class="container">
+			  
+			  
+	
+			  <div class="row mt-5 justify-content-between align-items-center">
+				<div class="col-lg-7 mb-5 mb-lg-0" data-aos="fade-up">
+				  <figure class="dotted-bg">
+					<div class="tracking-in-expand-fwd-bottom">
+					  <div class=".test_obj">
+					<img src="https://github.com/starryoon/new/blob/main/ezgif.com-gif-maker%20(1).gif?raw=true" alt="Image" class="img-fluid">
+					  </div>
+					</div>
+				  </figure>
+				</div>
+				<div class="col-lg-5 pl-lg-5" data-aos="fade-up"  data-aos-delay="100">
+				  <h3 class="mb-4 heading-h3">채팅 분석 기반 장소추천 서비스</h3>
+				  <p >친구들과 대화만 하면?<br> 인공지능이 핵심단어를 추출해서<br>장소를 추천해드릴게요<br> <a id="chats2" href="#">채팅하러가기</a></p>
+				  <p class="mb-4">카페, 음식점, 술집, 어디갈지 고민될때 친구들과 자유롭게 채팅하고 분석을 맡겨보세요.</p>
+	
+				  <ul class="list-unstyled list-check d-block">
+					<span class="center"><strong>
+	
+				  </strong>
+				  </span>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+		  </div>
+	
+		  <div class="unslate_co--section" id="about-section">
+		<div class="container">
+            <div class="portfolio-single-wrap unslate_co--section" id="portfolio-single-section">
+              <div class="portfolio-single-inner">
+    
+                
+                <div class="row mt-5 justify-content-between align-items-center">
+                  <div class="col-lg-7 mb-5 mb-lg-0" data-aos="fade-up">
+                    <figure class="dotted-bg">
+                      <div class="tracking-in-expand-fwd-bottom">
+                        <div class=".test_obj">
+                      <img src="https://github.com/starryoon/new/blob/main/ezgif.com-gif-maker%20(2).gif?raw=true" alt="Image" class="img-fluid">
+                        </div>
+                      </div>
+                    </figure>
+                  </div>
+                  <div class="col-lg-5 pl-lg-5" data-aos="fade-up"  data-aos-delay="100">
+                    <h3 class="mb-4 heading-h3">위치기반 서비스</h3>
+                    <p >각자의 위치를 입력하면?<br>만나기 좋은 중간지점을 찾아<br>위치를 추천해드릴게요<br> <a href="{% url 'route:center' %}">찾으러가기</a></p>
+                    <!-- <p class="mb-4">카페, 음식점, 술집, 어디갈지 고민될때 친구들과 자유롭게 채팅하고 분석을 맡겨보세요.</p> -->
+      
+                    <!-- <ul class="list-unstyled list-check d-block">
+                      <span class="center"><strong>
+                      <li class="d-block">카카오톡 내보내기</li>
+                      <li class="d-block">긍/부정 분석</li>
+                      <li class="d-block">핵심 단어 추출</li>
+                    </strong> -->
+                    </span>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+ 
+
+      
+      <div class="unslate_co--section section-counter bg-light" id="stats-section">
+		<div class="container">
+			<div class="section-heading-wrap text-center mb-5" data-aos="fade-up">
+			<h2 class="heading-h2 text-center divider"><span class="center">어디고</span> 서비스는</h2>
+			
+			</div>
+
+
+			<div class="row pt-5">
+			<div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+				<div class="counter-v1 text-center">
+				<span class="number-wrap">
+					<span class="number number-counter" data-number="1015">0</span>
+				</span>
+				<span class="counter-label">장소 카테고리</span>
+				</div>
+			</div>
+			<div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+				<div class="counter-v1 text-center">
+				<span class="number-wrap">
+					<span class="number number-counter" data-number="1142">0</span>
+				</span>
+				<span class="counter-label">카페</span>
+				</div>
+			</div>
+			<div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+				<div class="counter-v1 text-center">
+				<span class="number-wrap">
+					<span class="number number-counter" data-number="28924">0</span>
+				</span>
+				<span class="counter-label">장소 갯수</span>
+				</div>
+			</div>
+			<div class="col-6 col-sm-6 mb-5 mb-lg-0 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+				<div class="counter-v1 text-center">
+				<span class="number-wrap">
+					<span class="number number-counter" data-number="12500">0</span>
+				</span>
+				<span class="counter-label">회원수</span>
+				
+				</div>
+			</div>
+			</div>
+			
+		</div>
+		<h4 class="heading-h2 text-center divider" style="padding-top: 10%;">데이터를 기반으로 추천해 드려요.</h4>
+		
+		<div class="site-section unslate_co--section" id="services-section">
+			<div class="container">
+  
+		  <div>
+	{% include 'footer.html' %}
+</div>
+</div>
+</div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="{% static 'js/scripts-dist.js' %}"></script>
+	<script src="{% static 'js/main2.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+	<script>
+		$(document).ready(function(){
+		  $('#chats2').click(function(e){
+			e.preventDefault();
+	  
+			let center = '{{ request.session.center_name }}';
+			let user = '{{ request.session.user }}';
+	  
+			if (!center){
+			  alert("중간지점을 먼저 입력해주세요.");
+			  return false;
+			}else{
+			  if (!user){
+				alert("로그인을 먼저 진행해주세요.");
+			  }else{
+				window.location.href = "{% url 'chat:index' %}";
+			  }
+			}
+		  });
+		})
+	</script>
+
+	</body>
+</html>

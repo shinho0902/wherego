@@ -1,0 +1,202 @@
+{% load static %}
+
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <meta property="og:title" content="구름이의 클라우드" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.flaticon.com/kr/" />
+  <meta property="og:image" content="https://www.flaticon.com/kr/packs/oil-and-gas-industry-34" />
+  <meta property="og:description" content="주중에 일하고 주말에 쉽니다" />
+  <link rel="shortcut icon" href="{% static 'img/어디고.png' %}">
+  <title>어디GO 이미지분석</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+
+
+    <style>
+
+    #sidebar > :last-child {
+        margin-bottom: 0 !important;
+    }
+
+    #find {
+
+      
+      background-color: rgba(0, 0, 0, 0);
+      left: 43%;
+      bottom: 14%;
+    }
+
+      
+      #file {
+        display: none;
+      }
+
+      .b1{
+        width: 500px;
+        height: 220px;
+        background-color: rgba(0, 0, 0, 0);
+        color: rgb(205, 221, 247);
+        border: 4px dashed;
+        float: left;
+        margin-left: -55%;
+        margin-top: 10%;
+        
+        box-sizing: border-box;
+      }
+
+      .main-wrapper {
+        flex:1;
+      }
+
+      .column {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+      }
+
+      #content {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        flex:1;
+      }
+
+      .content-title {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding: 20px;
+        margin-bottom: 40px;
+      }
+
+      .content-title span {
+        font-size:30px;
+      }
+   
+
+      .cafe-img img {
+
+        display:block;
+        width:100%;
+        height:auto;
+      }
+
+      .card-list {
+        display:grid;
+        grid-template-columns: repeat(auto-fit,minmax(300px,auto));
+        grid-gap:80px;
+      }
+
+      .card-body {
+        display:flex;
+        flex-direction:column;
+        align-items:left;
+      }
+
+      .card-title {
+        font-size:0.8em;
+        
+      }
+
+      .card-text {
+        font-size:1em;
+      }
+
+      .card {
+        text-decoration:none;
+        color:inherit;
+      }
+      
+      .warm {
+        color:#8D6E63;
+        font-weight:600;
+      }
+
+      .nature{
+        color:#558B2F;
+        font-weight:600;
+      }
+
+      .mono {
+        color:#757575;
+        font-weight:600;
+      }
+
+    </style>
+
+  </head>
+  <body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+    
+    {% include 'header.html' %}
+
+      <div class="site-section unslate_co--section" id="services-section">
+        <div class="container">
+
+
+          <div id="main-wrapper" style="padding: 5em 0 5em 0; height:auto;">
+            <div class="container" style="height:auto;">  
+                <div class="column" style="height:auto;">
+                    <div id="content" style="height:auto;">
+                          {% if len_stores %}      
+                            <div class="content-title">
+                              {% if label_result == "[0]" %}
+                                <span>당신에게 맞는 <strong class="warm">WARM</strong>톤의 카페를 찾았어요!</span>
+                              {% elif label_result == "[1]" %}
+                                <span>당신에게 맞는 <strong class="nature">NATURE</strong>톤의 카페를 찾았어요!</span>
+                              {% else %}
+                                <span>당신에게 맞는 <strong class="mono">MONO</strong>톤의 카페를 찾았어요!</span>
+                              {% endif %}
+                              
+                            </div>
+                            <ul class="card-list">                         
+                                {% for store in stores %}
+                                  <a class="card" target='_blank' href="{{store.cafe_url}}">
+                                    <div class="card-header">
+                                      <span class="cafe-title">{{store.title}}</span>
+                  
+                                    </div>
+                                    <div class="cafe-img">
+                                      {% if store.img_url %}
+                                        <img class="img_url_tag" src="{{store.img_url}}"/>
+                                      {% else %}
+                                        <img class="img_url_tag" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
+
+                                      {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                      <span class="card-title">{{store.category}}</span>
+                                      <span class="card-text">{{store.roadAddress}}</span>
+                                    </div>
+                                  </a>
+                                {% endfor %} 
+                              </ul>                           
+                              {% else %}
+                              <h1 style=" font-family: 'IBM Plex Sans KR', sans-serif;
+                              color: black;
+                              font-weight: bold; margin-left:-120px"><img src="https://github.com/starryoon/new/blob/main/free-icon-sad-1182403.png?raw=true">
+                               해당지역의 장소가 아직 없어요.</h1>
+                               <br>
+                               <h5 style=" font-family: 'IBM Plex Sans KR', sans-serif;
+                               color: black;
+                               font-weight: bold;">어디고 서비스는 추후 다양한 장소를 업데이트하여<br>
+                               폭넓은 서비스를 제공해드릴 예정입니다.
+                               </h5>
+
+                              {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>               
+            {% include 'footer.html' %}
+    
+
+  </body>
+</html>

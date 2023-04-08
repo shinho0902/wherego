@@ -1,0 +1,216 @@
+<!-- chat/templates/chat/room.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>어디GO 채팅</title>
+    <link rel="shortcut icon" href="{% static 'img/어디고.png' %}">
+</head>
+<style>
+
+    .page-header {
+        display:flex;
+        justify-content:left;
+        padding-left:10px;
+    }
+
+    .list-group  {
+        margin-top:30px;
+    }
+
+    .input-group {
+        margin-top:20px;
+        border: 1px solid #bcbdbd;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    #chat-message-input {
+        padding-top:10px;
+        border:none;
+    }
+
+    #chat-message-input::placeholder{
+        font-size:15px;
+        
+    }
+
+    .panel {
+        margin-top:40px;
+    }
+
+    #chat-message-submit {
+        width:100px;
+    }
+
+
+    
+</style>
+<body style="position:absolute; width:100vw;" data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+    {% include 'header.html' %}
+    
+
+    <div class="container" style="margin-top:20vh;">
+        <div class="page-header">
+            <h1 class="room_title"><b style="color:#3369e7">{{groupname}}</b></h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div id="user-list" class="list-group">
+                    <a href="" class="list-group-item disabled">
+                        <h4 class="list-group-item-heading">그룹 인원</h4>
+                        {% for user in users %}
+                        {% if user.username == request.session.user %}
+                        <a class="list-group-item user" style="color:#1E90FF;">{{ user.username }}</a>
+                        {% else %}
+                        <a class="list-group-item user">{{ user.username }}</a>
+                        {% endif %}
+                        {% endfor %}
+                    </a>
+                </div>
+                
+                <form action="{% url 'chat:groupchat' %}" method="POST" id="frm">
+                    {% csrf_token %}
+                    <button type="button" class="btn" id="analychat" onclick="chk_form()" style="background-color: #4775e0; margin-top:10px;"><p style='margin: auto; text-align:center; color:white;'>채팅분석하기 GO</p></button>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">채팅</h4>
+                    </div>
+                    <div>
+                        <ul id="messages" class="messages">
+                            {# Messages go here #}
+                            {% for message in messages %}
+                                {% if message.user.username == request.session.user %}
+                                <li class="message right">
+                                {% else %}
+                                <li class="message left">
+                                {% endif %}
+
+                                    <div class="avatar">{{message.user.username}}</div>
+                                        <div class="text_wrapper">
+                                            <div class="text">{{message.message }}<br>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="chat-message-input" type="text"
+                                   class="form-control input"
+                                   placeholder="메세지를 입력해주세요 ..."
+                                   maxlength="500"
+                                   minlength="1">
+                            
+                            <button class="btn btn-info btn"
+                                    id="chat-message-submit">
+                                Send</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+    {{ room_name|json_script:"room-name" }}
+    
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+
+        
+        function chk_form() {
+            
+            let center = '{{ request.session.center_name }}';
+            
+            if (!center){
+                alert("중간거리를 먼저 입력해주세요.");
+                return false;
+            }
+            var doc = document.getElementById("messages");
+            if(doc.firstChild){
+                var testForm = $("#frm");
+                var newInput = document.createElement("input");
+                newInput.setAttribute('size',50);
+                newInput.setAttribute("type", "hidden");
+                newInput.setAttribute("name", "chatid");
+                newInput.setAttribute("value", roomName);
+
+                testForm.append(newInput);
+                document.getElementById('frm').submit();
+            }else{
+                alert("대화가 존재하지않습니다.");
+                return false;
+            }
+        }
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            let position = 'left';
+            let message = data.message.split(" ")[0].slice(0,-1);
+            let real_message = data.message.split(" ").slice(1,).join(" ")
+
+            if (message == '{{ request.session.user }}') position = 'right';
+            const messageItem = `
+                    <li class="message ${position}">
+                        <div class="avatar">${message}</div>
+                            <div class="text_wrapper">
+                                <div class="text">${real_message}<br>
+                            </div>
+                        </div>
+                    </li>`;
+            $(messageItem).appendTo('#messages');
+            var mydiv = $("#messages");
+            mydiv.scrollTop(mydiv.prop("scrollHeight"));
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value.trim();
+            if (message){
+                chatSocket.send(JSON.stringify({
+                    'message': message
+                }));
+                messageInputDom.value = '';
+            }else{
+                alert("한 글자 이상 입력해주세요.");
+            }
+        };
+
+        $(document).ready(function(){
+            var mydiv = $("#messages");
+            mydiv.scrollTop(mydiv.prop("scrollHeight"));
+            window.scrollTo(0, 0);
+        })
+    </script>
+</body>
+</html>
+{% endblock %}

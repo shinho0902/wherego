@@ -1,0 +1,299 @@
+{% load static %}
+    
+
+	<link rel="stylesheet" href="{% static 'css/vendor/icomoon/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/vendor/owl.carousel.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/vendor/animate.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/vendor/aos.css' %}">
+	<link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/vendor/jquery.fancybox.min.css' %}">
+  <link rel="shortcut icon" href="{% static 'img/어디고.png' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/component.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}" />
+
+	<link rel="stylesheet" href="{% static 'css/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
+
+  <style>
+    #icon1::before{
+              
+      color: black;
+
+  
+      
+  }
+    #icon1:hover{
+      background-color: rgb(234, 232, 232);
+     
+  }
+  .test_obj {
+    
+    animation: fadeInUp 3s;
+    
+  }
+  .tracking-in-expand-fwd-bottom {
+    -webkit-animation: tracking-in-expand-fwd-bottom 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        animation: tracking-in-expand-fwd-bottom 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        animation-delay: 5s;
+
+
+  }
+
+  .center {
+    color:#3369e7 ;
+  }
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translateZ(0);
+    }
+  }
+  .unslate_co--footer{
+   background-color: white;
+  }
+  .site-logo{
+    margin-right: 50%;
+  }
+  .nav:after{
+    color:#3369e7;
+  }
+  .navlink:hover{
+    color:#3369e7;
+  }
+
+  
+
+
+
+
+
+  
+  #log{
+    margin-left: 1300%;
+  }
+  #log:hover{
+    color: #3369e7;
+  }
+  #my{
+    margin-left: 240%;
+    position: relative;
+    bottom: 70px;
+   
+   
+  }
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap');
+  p {
+      font-family: 'IBM Plex Sans KR', sans-serif;
+      color: black;
+      font-weight: bold;
+      font-size: medium;
+  }
+  
+  .newDiv {
+    display:flex;
+    margin-bottom:30px;
+    
+    
+  }
+
+  .newDivInput {
+    width: 400%;
+    border: 2px solid;
+    
+  }
+  #testForm{
+    width: 150%;
+  }
+  .removeInput{
+    width: 30%;
+    display: flex;
+    border-radius: 30px;
+    margin-left: 20px;
+    text-align: center;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    color: black;
+    background-color: white;
+    font-size:large;
+    border:none;
+  
+
+  }
+  .removeInput:hover{
+    color: red;
+    background-color: white;
+    border-color: white;
+    border:none;
+    outline: 0;
+
+  }
+  .removeInput:active{
+    border-color: white;
+    background-color: white;
+    border:none;
+    outline: 0;
+    
+  }
+  .removeInput:after{
+    background-color: white;
+    border-color: white;
+    border:none;
+    outline: 0;
+
+  }
+  .removeInput:focus{
+    background-color: white;
+    border-color: white;
+    border:none;
+    outline: 0;
+
+  }
+
+
+  
+  .ho:hover {
+    color: #3369e7;
+  
+  }
+  #current{
+    color: #3369e7;
+    font-weight: bolder;
+    font-weight: 900;
+  }
+  .bt{
+    border: 0;
+    background-color: transparent;
+  }
+  .insertButton{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent; 
+    
+  }
+
+
+
+  </style>
+
+
+
+  <nav class="unslate_co--site-nav site-nav-target">
+  
+    <div class="container">
+   
+      <div class="row align-items-center justify-content-between text-left">
+    
+        {% with app_name=request.resolver_match.app_name %}
+        <div class="col-md-5 text-right text-lg-left">
+          <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+            <a href="{% url 'main:index' %}"><img src="https://raw.githubusercontent.com/starryoon/new/0c004aa504ad758cdd21606923de1c3593219283/%EC%A0%9C%EB%AA%A9%EC%9D%84%20%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-003.png"></a>
+    
+            <li><a href="{% url 'route:center' %}"><p class="ho" id="{% if app_name == 'route'%}current{% endif %}">중간지점 찾기</p></a></li>
+            
+            <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+              <li class="has-children">
+       
+                <a href="#" onclick="return false;"><p class="ho" id="{% if app_name == 'chat'%}current{% endif %}{% if app_name == 'imageupload'%}current{% endif %}">AI장소추천</p></a>
+                <ul class="dropdown">
+                  <li>
+                    <a id="chats" href="#"><p class="ho" id="{% if app_name == 'chat'%}current{% endif %}">채팅 분석</p></a>
+                    
+                  </li>
+                  <li>
+                    <a id="images" href="{% url 'imageupload:index' %}"><p class="ho" id="{% if app_name == 'imageupload'%}current{% endif %}">이미지 분석</p></a>
+                    
+                  </li>
+         
+                </ul>
+              </li>
+              
+            </ul>
+            <li><a href="{% url 'board:index' 1 %}" class="nav-link"><p class="ho" id="{% if app_name == 'board'%}current{% endif %}">다이어리</p></a></li>
+            {% if request.session.user %}
+            
+            <span id="my">
+              <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                <li class="has-children">
+                  <a href="#home-section" class="nav-link"><p>{{ request.session.user | slice:":-2" }}**</p></a>
+                  <ul class="dropdown">
+                    <li>
+                      <a href="{% url 'account:mypage' %}"><p>mypage</p></a>
+                    </li>
+                    <li>
+                      <a href="{% url 'account:logout' %}"><p>로그아웃</p></a>
+                    </li>
+           
+                  </ul>
+                </li>
+                
+              </ul>
+            </span>
+            {% else %}
+            <span id="my">
+              <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                <li class="has-children">
+                  <a href="{% url 'account:login' %}"><p>Login</p></a>
+                </li>
+              </ul>
+            </span>
+            {% endif %}
+            {% endwith %}
+          </ul>
+          
+
+
+          <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
+            <li><a href="#" class="js-menu-toggle">Menu</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+  </nav>
+  
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+    
+<script>
+  $(document).ready(function(){
+    $('#chats').click(function(e){
+      e.preventDefault();
+
+      let center = '{{ request.session.center_name }}';
+      let user = '{{ request.session.user }}';
+
+      if (!center){
+        alert("중간지점을 먼저 입력해주세요.");
+        return false;
+      }else{
+        if (!user){
+          alert("로그인을 먼저 진행해주세요.");
+        }else{
+          window.location.href = "{% url 'chat:index' %}";
+        }
+      }
+    });
+
+    $('#images').click(function(e){
+      e.preventDefault();
+
+      let center = '{{ request.session.center_name }}'
+
+      if (!center){
+        alert("중간지점을 먼저 입력해주세요.");
+        return false;
+      }else{
+        window.location.href = "{% url 'imageupload:index' %}";
+      }
+    });
+  })
+</script>
+
+

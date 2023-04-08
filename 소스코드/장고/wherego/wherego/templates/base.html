@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Toy Chat Application">
+    <title>{% block title %}어디고 채팅{% endblock %}</title>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/style3.css' %}"/>
+
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+
+{% include 'header.html' %}
+
+{% block main %}
+{% endblock %}
+
+</body>
+
+</html>
